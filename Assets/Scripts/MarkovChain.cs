@@ -6,17 +6,20 @@ using System.Runtime.InteropServices;
 
 public class MarkovChain : MonoBehaviour {
 
-    [DllImport("MarkovChain", EntryPoint = "CalculateWeatherState")]
-    public static extern int CalculateWeatherState(int index);
+    [DllImport("MarkovChain", EntryPoint = "calculateWeatherState")]
+    public static extern int CalculateWeatherState();
+
+    [DllImport("MarkovChain", EntryPoint = "getRandom")]
+    public static extern double GetRandom(double min, double max);
+
+    [DllImport("MarkovChain", EntryPoint = "calculateTransition")]
+    public static extern int CalculateTransition(int index);
 
     public int currentState = 0;
 
-    void Start () {
-        currentState = CalculateWeatherState(currentState);
-    }
-
     void Update()
     {
+        currentState = CalculateWeatherState();
         switch (currentState)
         {
             case 0:
@@ -29,5 +32,11 @@ public class MarkovChain : MonoBehaviour {
                 Debug.Log("WINDY");
                 break;
         }
+    }
+
+    [ContextMenu("CALCULATE")]
+    void Calculate()
+    {
+        Debug.Log(CalculateTransition(1));
     }
 }
