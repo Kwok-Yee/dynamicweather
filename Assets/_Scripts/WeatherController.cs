@@ -24,19 +24,16 @@ public class WeatherController : MonoBehaviour
         {
             // SUNNY
             case 0:
-                Debug.Log("SUNNY");
                 ResetLight();
                 ResetFrozenCameraEffect();
                 break;
             // CLOUDY
             case 1:
-                Debug.Log("CLOUDY");
                 DimLight();
                 ResetFrozenCameraEffect();
                 break;
             // FREEZING
             case 2:
-                Debug.Log("FREEZING");
                 FrozenCameraEffect();
                 break;
         }
