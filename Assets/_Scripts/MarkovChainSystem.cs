@@ -9,8 +9,8 @@ public class MarkovChainSystem : MonoBehaviour
 
     private static int states = 3;
     private int currentState = 0;
-    private int startTime = 5;
-    private int repeatRateTIme = 5;
+    private float startTime = 5;
+    private float repeatRateTIme = 5;
 
     private int[][] transitions = new int[states][];
     private double[][] probabilities = new double[states][];
