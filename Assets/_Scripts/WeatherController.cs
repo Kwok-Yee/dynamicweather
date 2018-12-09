@@ -8,6 +8,7 @@ public class WeatherController : MonoBehaviour
     public MarkovChainSystem markovChainSystem;
     public Light light;
     public Camera camera;
+    public GameObject rainPrefab;
 
     private FrostEffect frostEffect;
 
@@ -15,6 +16,7 @@ public class WeatherController : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         frostEffect = camera.GetComponent<FrostEffect>();
     }
 
@@ -24,16 +26,26 @@ public class WeatherController : MonoBehaviour
         {
             // SUNNY
             case 0:
-                ResetLight();
+                Light();
+                SetRaining(false);
                 ResetFrozenCameraEffect();
                 break;
             // CLOUDY
             case 1:
+                SetRaining(false);
+                ResetFrozenCameraEffect();
+                DimLight();
+                break;
+            // RAINING
+            case 2:
                 DimLight();
                 ResetFrozenCameraEffect();
+                SetRaining(true);
                 break;
             // FREEZING
-            case 2:
+            case 3:
+                DimLight();
+                SetRaining(false);
                 FrozenCameraEffect();
                 break;
         }
@@ -41,14 +53,19 @@ public class WeatherController : MonoBehaviour
 
     private void DimLight()
     {
-        if(light.intensity >= 0)
+        if (light.intensity >= 0)
             light.intensity -= 0.01f;
     }
 
-    private void ResetLight()
+    private void Light()
     {
-        if(light.intensity <= 0.5f)
+        if (light.intensity <= 0.5f)
             light.intensity += 0.01f;
+    }
+
+    private void SetRaining(bool state)
+    {
+        rainPrefab.SetActive(state);
     }
 
     private void FrozenCameraEffect()

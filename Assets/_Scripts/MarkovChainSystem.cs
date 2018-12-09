@@ -7,52 +7,37 @@ public class MarkovChainSystem : MonoBehaviour
 {
     MarkovChain markovChain;
 
-    private static int states = 3;
+    private const int states = 4;
     private int currentState = 0;
-    private float startTime = 5;
-    private float repeatRateTIme = 5;
+    private float startTime = 12;
+    private float repeatRateTIme = 12;
+    private int runs = 0;
 
     private int[][] transitions = new int[states][];
     private double[][] probabilities = new double[states][];
 
-    private int[] sunnyTrans = new int[] { 0, 1, 2 };
-    private int[] cloudyTrans = new int[] { 1, 0, 2 };
-    private int[] freezingTrans = new int[] { 2, 0, 1 };
-    //private int[] sunnyTrans = new int[] { 0, 1, 2, 3, 4 };
-    //private int[] rainingTrans = new int[] { 1, 0, 2, 3, 4 };
-    //private int[] windyTrans = new int[] { 2, 0, 1, 3, 4 };
-    //private int[] stormingTrans = new int[] { 3, 0, 1, 2, 4 };
-    //private int[] snowingTrans = new int[] { 4, 0, 1, 2, 3 };
+    private int[] sunnyTrans = new int[states] { 0, 1, 2, 3 };
+    private int[] cloudyTrans = new int[states] { 1, 0, 2, 3 };
+    private int[] rainingTrans = new int[states] { 2, 0, 1, 3 };
+    private int[] freezingTrans = new int[states] { 3, 0, 1, 2 };
 
-    private double[] sunnyProbs = new double[] { 0.5, 0.3, 0.2 };
-    private double[] cloudyProbs = new double[] { 0.4, 0.3, 0.3 };
-    private double[] freezingProbs = new double[] { 0.5, 0.2, 0.3 };
-    //private double[] sunnyProbs = new double[] { 0.5, 0.2, 0.2, 0.1, 0 };
-    //private double[] rainingProbs = new double[] { 0.3, 0.3, 0.1, 0.1, 0.2 };
-    //private double[] windyProbs = new double[] { 0.3, 0.3, 0.1, 0.1, 0.2 };
-    //private double[] stormingProbs = new double[] { 0.4, 0.1, 0.3, 0.2, 0 };
-    //private double[] snowingProbs = new double[] { 0.5, 0, 0.2, 0.2, 0.1 };
+    private double[] sunnyProbs = new double[states] { 0.5, 0.5, 0, 0 };
+    private double[] cloudyProbs = new double[states] { 0.4, 0.2, 0.2, 0.2 };
+    private double[] rainingProbs = new double[states] { 0.5, 0.1, 0.1, 0.3 };
+    private double[] freezingProbs = new double[states] { 0.4, 0.1, 0.2, 0.3 };
 
     // Use this for initialization
     void Start()
     {
         transitions[0] = sunnyTrans;
         transitions[1] = cloudyTrans;
-        transitions[2] = freezingTrans;
-        //transitions[0] = sunnyTrans;
-        //transitions[1] = rainingTrans;
-        //transitions[2] = windyTrans;
-        //transitions[3] = stormingTrans;
-        //transitions[4] = snowingTrans;
+        transitions[2] = rainingTrans;
+        transitions[3] = freezingTrans;
 
         probabilities[0] = sunnyProbs;
         probabilities[1] = cloudyProbs;
-        probabilities[2] = freezingProbs;
-        //probabilities[0] = sunnyProbs;
-        //probabilities[1] = rainingProbs;
-        //probabilities[2] = windyProbs;
-        //probabilities[3] = stormingProbs;
-        //probabilities[4] = snowingProbs;
+        probabilities[2] = rainingProbs;
+        probabilities[3] = freezingProbs;
 
         markovChain = new MarkovChain();
 
@@ -62,6 +47,8 @@ public class MarkovChainSystem : MonoBehaviour
     private void CalculateWeatherState()
     {
         currentState = markovChain.CalculateWeatherState(states, transitions, probabilities);
+        runs++;
+        Debug.Log("Run: " + runs + " State: " + currentState);
     }
 
     public int GetCurrentState() { return currentState; }

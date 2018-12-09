@@ -54,3 +54,4 @@ MonoBehaviour:
   markovChainSystem: {fileID: 0}
   light: {fileID: 0}
   camera: {fileID: 0}
+  rainPrefab: {fileID: 0}
