@@ -10,7 +10,7 @@ public class MarkovChainSystem : MonoBehaviour
     private const int states = 4;
     private int currentState = 0;
     private float startTime = 12;
-    private float repeatRateTIme = 12;
+    private float repeatRateTime = 12;
     private int runs = 0;
 
     private int[][] transitions = new int[states][];
@@ -41,7 +41,7 @@ public class MarkovChainSystem : MonoBehaviour
 
         markovChain = new MarkovChain();
 
-        InvokeRepeating("CalculateWeatherState", startTime, repeatRateTIme);
+        InvokeRepeating("CalculateWeatherState", startTime, repeatRateTime);
     }
 
     private void CalculateWeatherState()
